@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stick Man Running in Circles</title>
+  <style>
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stickManCanvas" width="400" height="400"></canvas>
+  <script>
+    const canvas = document.getElementById('stickManCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let angle = 0;
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw stick man
+      drawStickMan(canvas.width / 2 + Math.cos(angle) * 100, canvas.height / 2 + Math.sin(angle) * 100);
+      
+      // Increase the angle for next frame
+      angle += 0.05;
+      
+      requestAnimationFrame(draw);
+    }
+
+    function drawStickMan(x, y) {
+      // Head
+      ctx.beginPath();
+      ctx.arc(x, y - 30, 10, 0, Math.PI * 2);
+      ctx.fillStyle = 'black';
+      ctx.fill();
+      ctx.closePath();
+
+      // Body
+      ctx.beginPath();
+      ctx.moveTo(x, y - 20);
+      ctx.lineTo(x, y + 30);
+      ctx.strokeStyle = 'black';
+      ctx.stroke();
+      ctx.closePath();
+
+      // Arms
+      ctx.beginPath();
+      ctx.moveTo(x, y - 10);
+      ctx.lineTo(x - 20, y);
+      ctx.moveTo(x, y - 10);
+      ctx.lineTo(x + 20, y);
+      ctx.strokeStyle = 'black';
+      ctx.stroke();
+      ctx.closePath();
+
+      // Legs
+      ctx.beginPath();
+      ctx.moveTo(x, y + 30);
+      ctx.lineTo(x - 10, y + 60);
+      ctx.moveTo(x, y + 30);
+      ctx.lineTo(x + 10, y + 60);
+      ctx.strokeStyle = 'black';
+      ctx.stroke();
+      ctx.closePath();
+    }
+
+    draw();
+  </script>
+</body>
+</html>
